@@ -8,6 +8,10 @@ def plot_map(cities, neurons, iteration):
     dots. The method plots the iteration in which the snapshot was taken.
     :param cities: the cities to be plotted, passed as a list of (x, y)
     coordinates
+    :param neurons: the cities to be plotted, passed as a list of (x, y)
+    coordinates
+    :param iteration: the iterations when the snapshot is taken
+    :return: returns nothing
     """
     plt.scatter(*zip(*cities), color='red')
     plt.scatter(*zip(*neurons), color='green')
@@ -16,4 +20,22 @@ def plot_map(cities, neurons, iteration):
 
     plt.title('Iteration #{:06d}'.format(iteration))
     plt.axis('off')
-    plt.savefig('{:06d}.png'.format(iteration))
+    plt.savefig('results/{:06d}.png'.format(iteration))
+
+def read_data(filename):
+    """
+    Reads and parses data from a txt file with a map data. The format that the
+    function expects is the one followed in the uwaterloo TSP web archive
+    (math.uwaterloo.ca/tsp/world/countries.html), ignoring the first
+    description lines that have to be manually removed.
+    :param filename: the path to the file to be parsed
+    :return: the cities as a list of (x, y) coordinates
+    """
+    cities = []
+
+    with open(filename, 'r') as f:
+        for line in f:
+            city = map(float, line.split()[1:])
+            cities.append((city[1], city[0]))
+
+    return cities
