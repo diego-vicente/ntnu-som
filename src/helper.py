@@ -13,6 +13,7 @@ def plot_map(cities, neurons, iteration):
     :param iteration: the iterations when the snapshot is taken
     :return: returns nothing
     """
+    plt.figure()
     plt.scatter(*zip(*cities), color='red')
     plt.scatter(*zip(*neurons), color='green')
 
@@ -20,7 +21,7 @@ def plot_map(cities, neurons, iteration):
 
     plt.title('Iteration #{:06d}'.format(iteration))
     plt.axis('off')
-    plt.savefig('results/{:06d}.png'.format(iteration))
+    plt.savefig('results/{}.png'.format(iteration))
 
 def read_data(filename):
     """
@@ -34,7 +35,7 @@ def read_data(filename):
     """
     cities = []
 
-    path = '../assets/{}.png'.format(filename)
+    path = '../assets/{}.txt'.format(filename)
     with open(path, 'r') as f:
         for line in f:
             city = map(float, line.split()[1:])
