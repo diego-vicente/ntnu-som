@@ -27,13 +27,15 @@ def read_data(filename):
     Reads and parses data from a txt file with a map data. The format that the
     function expects is the one followed in the uwaterloo TSP web archive
     (math.uwaterloo.ca/tsp/world/countries.html), ignoring the first
-    description lines that have to be manually removed.
+    description lines that have to be manually removed. The method searches for
+    the filename in the assets folder.
     :param filename: the path to the file to be parsed
     :return: the cities as a list of (x, y) coordinates
     """
     cities = []
 
-    with open(filename, 'r') as f:
+    path = '../assets/{}.png'.format(filename)
+    with open(path, 'r') as f:
         for line in f:
             city = map(float, line.split()[1:])
             cities.append((city[1], city[0]))
