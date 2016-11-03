@@ -14,10 +14,10 @@ def plot_map(cities, neurons, iteration):
     :return: returns nothing
     """
     plt.figure()
-    plt.scatter(*zip(*cities), color='red')
-    plt.scatter(*zip(*neurons), color='green')
+    plt.scatter(*zip(*cities), color='red', s = 3)
+    plt.scatter(*zip(*neurons), color='green', s = 2)
 
-    plt.plot(*zip(*neurons), color='darkgreen')
+    plt.plot(*zip(*(neurons+[neurons[0]])), color='darkgreen')
 
     plt.title('Iteration #{:06d}'.format(iteration))
     plt.axis('off')
