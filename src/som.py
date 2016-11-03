@@ -3,41 +3,44 @@ import random
 
 def main():
     cities = read_data('western_sahara')
-    run_som(cities, 20, 0.2)
+    run_som(cities, 100000, 0.2)
 
 def run_som(cities, iterations, learning_rate):
     # Initialize the weights of the neurons
-    neurons = []
-    for i in range(len(cities)):
-        neurons.append([random.randint(9700, 12700),
-                        random.randint(20833, 27470)])
+    neurons = [[11000, 24000]]
+    for i in range(1, len(cities) * 4):
+        neurons.append([neurons[i-1][0] + 10,
+                        neurons[i-1][1] + 10])
+
     for i in range(iterations):
         # Pick a random city
         city = random.choice(cities)
         # Choose the winner neuron
-        winner = choose_winner(city, neurons)
+        winner, winner_index = choose_winner(city, neurons)
         # Update the weights of the neuron and its neighbourhood
-        for neuron in neurons:
-            neighbour = 1 / (manhattan_distance(winner, neuron) + 2)
-            neuron[0] += learning_rate * neighbour * (city[0] - winner[0])
-            neuron[1] += learning_rate * neighbour * (city[1] - winner[0])
+        for j in range(-3, 3):
+            k = winner_index + j
+            if 0 <= k < len(neurons):
+                neighbour = abs(1 / j*2) if j != 0 else 0.7
+                neurons[k][0] += learning_rate * neighbour * (city[0] - neurons[k][0])
+                neurons[k][1] += learning_rate * neighbour * (city[1] - neurons[k][1])
 
-        plot_map(cities, neurons, i)
-
-    plot_map(cities, neurons, iterations)
-
+        if i % 10000 == 0:
+            plot_map(cities, neurons, i)
 
 def manhattan_distance(center, neuron):
     return abs(center[0] - neuron[0]) + abs(center[1] - neuron[1])
 
 def choose_winner(city, neurons):
     minimum = 1000000
-    for neuron in neurons:
-        distance = manhattan_distance(city, neuron)
+    index = 0
+    for i in range(len(neurons)):
+        distance = manhattan_distance(city, neurons[i])
         if distance < minimum:
-            winner = neuron
+            winner = neurons[i]
             minimum = distance
-    return winner
+            index = i
+    return winner, index
 
 
 if __name__ == '__main__': main()
