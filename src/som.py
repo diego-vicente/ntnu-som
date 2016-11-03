@@ -29,10 +29,11 @@ def run_som(cities, iterations, learning_rate):
             neurons[k][0] += learning_rate * neighbour * (city[0] - neurons[k][0])
             neurons[k][1] += learning_rate * neighbour * (city[1] - neurons[k][1])
 
-        if i % 2500 == 0:
-            plot_map(cities, neurons, i)
+        if i % 2000 == 0:
             range_argument -= 1
 
+        if i < 10000 and i % 250 == 0 or i % 2500 == 0:
+            plot_map(cities, neurons, i)
         # Update the learning rate
         learning_rate *= 0.9999
 
