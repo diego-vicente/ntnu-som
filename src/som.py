@@ -5,6 +5,7 @@ from helper import read_data, plot_map
 import random
 from operator import itemgetter
 
+
 def main():
     cities = read_data('western_sahara')
     cities = normalize(cities)
@@ -66,6 +67,11 @@ def choose_winner(city, neurons):
 
 
 def normalize(cities):
+    """
+    Normalize list of city coordinates
+    :param cities: list of tuples, containing x and y coordinate
+    :return: normalized list of city coordinates
+    """
     max_x = max(cities,key=itemgetter(0))[0]
     max_y = max(cities,key=itemgetter(1))[1]
 
