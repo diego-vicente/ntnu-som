@@ -3,7 +3,7 @@ import abc
 
 class DecayFunction(metaclass=abc.ABCMeta):
     """
-    Base class for decay functions, implemented with a stregy design pattern
+    Base class for decay functions, implemented with a strategy design pattern
     """
     def __init__(self, init_value):
         self._value = init_value
