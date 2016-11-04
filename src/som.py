@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
+from decay import StaticDecay, LinearDecay, ExponentialDecay
 from helper import read_data, plot_map
 import random
 
 def main():
     cities = read_data('western_sahara')
-    run_som(cities, 25000, 0.8)
+
+    learning_rate = ExponentialDecay(0.8, 0.9999)
+    run_som(cities, 25000, learning_rate)
+
 
 def run_som(cities, iterations, learning_rate):
     # Initialize the weights of the neurons
@@ -28,8 +32,8 @@ def run_som(cities, iterations, learning_rate):
         for j in range(-range_argument, range_argument):
             k = (winner_index + j) % len(neurons)
             neighbour = 1.0 / (abs(j)+1) * 2
-            neurons[k][0] += learning_rate * neighbour * (city[0] - neurons[k][0])
-            neurons[k][1] += learning_rate * neighbour * (city[1] - neurons[k][1])
+            neurons[k][0] += learning_rate.value * neighbour * (city[0] - neurons[k][0])
+            neurons[k][1] += learning_rate.value * neighbour * (city[1] - neurons[k][1])
 
         if i % 2000 == 0:
             range_argument -= 1
@@ -37,7 +41,7 @@ def run_som(cities, iterations, learning_rate):
         if i < 10000 and i % 250 == 0 or i % 2500 == 0:
             plot_map(cities, neurons, i)
         # Update the learning rate
-        learning_rate *= 0.9999
+        learning_rate.decay()
 
     plot_map(cities, neurons, iterations)
 
