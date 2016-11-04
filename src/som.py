@@ -3,26 +3,31 @@
 from decay import StaticDecay, LinearDecay, ExponentialDecay
 from helper import read_data, plot_map
 import random
+from operator import itemgetter
 
 def main():
     cities = read_data('western_sahara')
+    cities = normalize(cities)
 
     learning_rate = ExponentialDecay(0.8, 0.9999)
-    run_som(cities, 25000, learning_rate)
+    neurons = init_neurons(cities)
+
+    som(neurons, cities, 25000, learning_rate)
 
 
-def run_som(cities, iterations, learning_rate):
-    # Initialize the weights of the neurons
-    # neurons = [[14000, 24000]]
-    # for i in range(1, len(cities) * 4):
-    #     neurons.append([neurons[i-1][0] + 10,
-    #                     neurons[i-1][1] + 10])
+def init_neurons(cities):
+    """
+    Initialize the weights of the neurons
+    """
     neurons = []
-    range_argument = int(len(cities) / 2)
     for i in range(len(cities) * 4):
-        neurons.append([random.randint(9700, 24700),
-                        random.randint(20833, 27470)])
+        neurons.append([random.random(), random.random()])
 
+    return neurons
+
+
+def som(neurons, cities, iterations, learning_rate):
+    range_argument = int(len(cities) / 2)
     for i in range(iterations):
         # Pick a random city
         city = cities[i % len(cities)]
@@ -59,5 +64,11 @@ def choose_winner(city, neurons):
             index = i
     return winner, index
 
+
+def normalize(cities):
+    max_x = max(cities,key=itemgetter(0))[0]
+    max_y = max(cities,key=itemgetter(1))[1]
+
+    return [(x/max_x, y/max_y) for (x, y) in cities]
 
 if __name__ == '__main__': main()
