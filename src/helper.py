@@ -38,7 +38,7 @@ def read_data(filename):
     path = 'assets/{}.txt'.format(filename)
     with open(path, 'r') as f:
         for line in f:
-            city = map(float, line.split()[1:])
+            city = list(map(float, line.split()[1:]))
             cities.append((city[1], city[0]))
 
     return cities

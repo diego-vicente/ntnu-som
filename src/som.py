@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from helper import read_data, plot_map
 import random
 
@@ -12,7 +14,7 @@ def run_som(cities, iterations, learning_rate):
     #     neurons.append([neurons[i-1][0] + 10,
     #                     neurons[i-1][1] + 10])
     neurons = []
-    range_argument = len(cities) / 2
+    range_argument = int(len(cities) / 2)
     for i in range(len(cities) * 4):
         neurons.append([random.randint(9700, 24700),
                         random.randint(20833, 27470)])
