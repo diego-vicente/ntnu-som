@@ -2,48 +2,52 @@
 
 from decay import StaticDecay, LinearDecay, ExponentialDecay
 from helper import read_data, plot_map
+from neighborhood import gaussian
 import random
 from operator import itemgetter
-
+from functools import partial
+import math
 
 def main():
     cities = read_data('western_sahara')
     cities = normalize(cities)
 
+    neuron_count = len(cities) * 4
+    radius = ExponentialDecay(neuron_count/10, 0.95)
     learning_rate = ExponentialDecay(0.8, 0.9999)
-    neurons = init_neurons(len(cities)*4)
+    neurons = init_neurons(neuron_count)
 
-    som(neurons, cities, 25000, learning_rate)
+    som(neurons, cities, 500, gaussian, learning_rate, radius)
 
 
 def init_neurons(count):
     """
     Initialize the weights of the neurons
     """
-    return [[random.random(), random.random()] for i in range(count)]
+    return [[random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)] for i in range(count)]
 
 
-def som(neurons, cities, iterations, learning_rate):
-    range_argument = int(len(cities) / 2)
+def som(neurons, cities, iterations, neighborhood, learning_rate, radius):
     for i in range(iterations):
         # Pick a random city
         city = cities[i % len(cities)]
         # Choose the winner neuron
         winner, winner_index = choose_winner(city, neurons)
+
+        distance = partial(list_euclidian_distance, len(neurons))
+
         # Update the weights of the neuron and its neighbourhood
-        for j in range(-range_argument, range_argument):
-            k = (winner_index + j) % len(neurons)
-            neighbour = 1.0 / (abs(j)+1) * 2
-            neurons[k][0] += learning_rate.value * neighbour * (city[0] - neurons[k][0])
-            neurons[k][1] += learning_rate.value * neighbour * (city[1] - neurons[k][1])
+        for neuron_index, neuron in enumerate(neurons):
+            d = distance(neuron_index, winner_index)
+            nf = neighborhood(d, radius.value)
+            neuron[0] += learning_rate.value * nf * (city[0] - neuron[0])
+            neuron[1] += learning_rate.value * nf * (city[1] - neuron[1])
 
-        if i % 2000 == 0:
-            range_argument -= 1
-
-        if i < 10000 and i % 250 == 0 or i % 2500 == 0:
+        if i < 250 and i % 5 == 0:
             plot_map(cities, neurons, i)
-        # Update the learning rate
+
         learning_rate.decay()
+        radius.decay()
 
     plot_map(cities, neurons, iterations)
 
@@ -72,5 +76,15 @@ def normalize(cities):
     max_y = max(cities,key=itemgetter(1))[1]
 
     return [(x/max_x, y/max_y) for (x, y) in cities]
+
+
+def list_euclidian_distance(n, i, j):
+    if(j<i):
+        t = j
+        j = i
+        i = t
+    if j-i <= n/2:
+        return j-i
+    return i - (j-n)
 
 if __name__ == '__main__': main()
