@@ -11,20 +11,16 @@ def main():
     cities = normalize(cities)
 
     learning_rate = ExponentialDecay(0.8, 0.9999)
-    neurons = init_neurons(cities)
+    neurons = init_neurons(len(cities)*4)
 
     som(neurons, cities, 25000, learning_rate)
 
 
-def init_neurons(cities):
+def init_neurons(count):
     """
     Initialize the weights of the neurons
     """
-    neurons = []
-    for i in range(len(cities) * 4):
-        neurons.append([random.random(), random.random()])
-
-    return neurons
+    return [[random.random(), random.random()] for i in range(count)]
 
 
 def som(neurons, cities, iterations, learning_rate):
