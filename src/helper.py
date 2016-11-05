@@ -1,4 +1,8 @@
 import matplotlib.pyplot as plt
+import os
+from decay import StaticDecay, LinearDecay, ExponentialDecay
+
+plt.figure()
 
 def plot_map(cities, neurons, iteration):
     """
@@ -13,7 +17,6 @@ def plot_map(cities, neurons, iteration):
     :param iteration: the iterations when the snapshot is taken
     :return: returns nothing
     """
-    plt.figure()
     plt.scatter(*zip(*cities), color='red', s = 3)
     plt.scatter(*zip(*neurons), color='green', s = 2)
 
@@ -22,6 +25,7 @@ def plot_map(cities, neurons, iteration):
     plt.title('Iteration #{:06d}'.format(iteration))
     plt.axis('off')
     plt.savefig('results/{}.png'.format(iteration))
+    plt.clf()
 
 def read_data(filename):
     """
