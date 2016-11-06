@@ -12,6 +12,7 @@
 \usepackage{color}
 \usepackage{listings}
 \usepackage{indentfirst}
+\usepackage{multirow}
 
 \graphicspath{{img/}}
 
@@ -145,9 +146,42 @@ cities in the map. As we have been able to test, the optimal size of the
 population to get a network with a proper size is about 4-8 times greater than
 the city population of the data set.\\
 
+\newpage
+
 By doing this tuning, we got to the conclusion that this was the best parameters
 for each of the decay strategies:
 
+\begin{table}[ht]
+  \begin{center}
+    \begin{tabular}{| c | c | c | c | c | c | c | c |}
+      \hline
+      Map & Decay & Neurons/City & $N$
+      & $\eta$ & $\alpha$ & Radius & Final Distance\\
+      \hline
+      \hline
+      \multirow{3}{*}{\textbf{Western Sahara}}
+        & Static & 6 & 5000 & Gaussian & 0.3 & 5 & - \\
+        & Linear &  \\
+        & Exponential & 8 & 500 & Gaussian & 0.7 & 23 & - \\
+      \hline
+      \multirow{3}{*}{\textbf{Djibouti}}
+        & Static & 4 & 5000 & Gaussian & 0.2 & 10 & - \\
+        & Linear &  \\
+        & Exponential & 8 & 1000 & Gaussian & 0.7 & 71 & - \\
+      \hline
+      \multirow{3}{*}{\textbf{Qatar}}
+        & Static & 6 & 5000 & Gaussian & 0.4 & 50 & - \\
+        & Linear &  \\
+        & Exponential & 8 & 5000 & Gaussian & 0.9 & 155 & - \\
+      \hline
+      \multirow{3}{*}{\textbf{Uruguay}}
+        & Static & 8 & 10000 & Gaussian & 0.4 & 500 & - \\
+        & Linear &  \\
+        & Exponential & 8 & 10000 & Bubble & 0.7 & 587 & - \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
 
 
 \end{document}
