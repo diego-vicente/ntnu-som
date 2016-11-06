@@ -64,22 +64,32 @@ def get_input():
     :return learning_rate: learning rate to be used
     :return radius: radius of neurons to be used
     """
-    # TODO: fix the code
-    radius = ExponentialDecay(734*8/10, 0.999)
-    learning_rate = ExponentialDecay(0.7, 0.9999)
-    return 'uruguay', 8, 10000, learning_rate, radius
-    data_set = input('Data set (western_sahara):') or 'western_sahara'
+    data_set = input('Data set (i.e western_sahara): ') or 'western_sahara'
     if not os.path.isfile('assets/{}.txt'.format(data_set)):
         exit("Did not find this data set file!", 1)
 
-    n_neurons = int(input('How many neurons per city? (8)') or 8)
+    # Load defaults for each data set
+    if data_set == 'uruguay':
+        defaults = ('uruguay', 8, 10000,
+                    ExponentialDecay(0.7, 0.9999),
+                    ExponentialDecay(734*8/10, 0.999))
+    elif data_set == 'western_sahara':
+        defaults = ('western_sahara', 8, 3500,
+                    ExponentialDecay(0.7, 0.9999),
+                    ExponentialDecay(29*8/10, 0.999))
 
+    use_defaults = input('Do you want to use default parameters? (y/n) ') == 'y'
+
+    if use_defaults:
+        return defaults
+
+    # Comprehensive input
+    n_neurons = int(input('How many neurons per city? (8)') or 8)
     iterations = int(input('How many iterations (500)?') or 500)
     learning_rate = get_input_decay('learning rate')
     radius = get_input_decay('radius')
 
     return data_set, n_neurons, iterations, learning_rate, radius
-
 
 def get_input_decay(name):
     """
