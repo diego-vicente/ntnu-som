@@ -3,19 +3,44 @@ import os
 from decay import StaticDecay, LinearDecay, ExponentialDecay
 from neighborhood import gaussian, bubble
 
-DEFAULTS = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
+DEFAULTS_EXP = {'uruguay': ('uruguay', 8, 10000, 1000, 500, bubble,
                         ExponentialDecay(0.7, 0.9999),
                         ExponentialDecay(734*8/10, 0.999)),
-            'western_sahara': ('western_sahara', 8, 3500, 50, 50, gaussian,
-                        ExponentialDecay(0.7, 0.9999),
-                        ExponentialDecay(29*8/10, 0.999)),
-            'qatar': ('qatar', 8, 5000, 500, 100, gaussian,
+            'western_sahara': ('western_sahara', 8, 500, 50, 50, gaussian,
+                        ExponentialDecay(0.7, 0.999),
+                        ExponentialDecay(29*8/10, 0.995)),
+            'qatar': ('qatar', 8, 5000, 500, 500, gaussian,
                         ExponentialDecay(0.9, 0.9999),
-                        ExponentialDecay(194*8/20, 0.999)),
-            'djibouti': ('djibouti', 8, 5000, 500, 100, gaussian,
-                        ExponentialDecay(0.9, 0.9999),
-                        ExponentialDecay(89*8/30, 0.999))}
+                        ExponentialDecay(194*8/10, 0.997)),
+            'djibouti': ('djibouti', 8, 1000, 50, 50, gaussian,
+                        ExponentialDecay(0.7, 0.999),
+                        ExponentialDecay(89*8/10, 0.995))}
 
+DEFAULTS_LIN = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
+                        LinearDecay(0.7, 0.9999),
+                        LinearDecay(734*8/10, 0.999)),
+            'western_sahara': ('western_sahara', 8, 500, 50, 50, gaussian,
+                        LinearDecay(0.7, 0.001),
+                        LinearDecay(29*8/10, 0.004)),
+            'qatar': ('qatar', 8, 10000, 500, 500, gaussian,
+                        LinearDecay(0.7, 0.00005),
+                        LinearDecay(194*8/10, 0.013)),
+            'djibouti': ('djibouti', 8, 8000, 500, 100, gaussian,
+                        LinearDecay(0.9, 0.0001),
+                        LinearDecay(89*8/10, 0.0085))}
+
+DEFAULT_STA = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
+                        StaticDecay(0.7),
+                        StaticDecay(734*8/10)),
+            'western_sahara': ('western_sahara', 8, 5000, 50, 50, gaussian,
+                        StaticDecay(0.8),
+                        StaticDecay(29*8/100)),
+            'qatar': ('qatar', 8, 5000, 500, 100, gaussian,
+                        StaticDecay(0.9),
+                        StaticDecay(194*8/20)),
+            'djibouti': ('djibouti', 8, 5000, 500, 100, gaussian,
+                        StaticDecay(0.9),
+                        StaticDecay(89*8/30))}
 
 plt.figure()
 
@@ -79,7 +104,7 @@ def get_input():
     :return learning_rate: learning rate to be used
     :return radius: radius of neurons to be used
     """
-    data_sets = {'w': 'western_sahara', 'q': 'qatar', 'u': 'urugay',
+    data_sets = {'w': 'western_sahara', 'q': 'qatar', 'u': 'uruguay',
                  'd': 'djibouti'}
 
     set_id = input('Data set [w/q/u/d]: ') or 'w'
@@ -91,8 +116,13 @@ def get_input():
     use_defaults = input('Do you want to use default parameters? (y/n) ') == 'y'
 
     if use_defaults:
-        return DEFAULTS[data_set]
-
+        decay = input('What kind of decay? [s/l/e]') or 'e'
+        if decay == 'e':
+            return DEFAULTS_EXP[data_set]
+        if decay == 'l':
+            return DEFAULTS_LIN[data_set]
+        if decay == 's':
+            return DEFAULT_STA[data_set]
     # Comprehensive input
     n_neurons = int(input('How many neurons per city? (8)') or 8)
     iterations = int(input('How many iterations (500)?') or 500)
