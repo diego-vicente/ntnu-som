@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+\usepackage{makeidx}               % index
+\usepackage[utf8]{inputenc}        % now we have tildes!
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[english]{babel}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{indentfirst}
+
+\graphicspath{{img/}}
+
+% Set more space after the equation display to make text more readable
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+    \setlength\abovedisplayskip{100pt}
+    \setlength\belowdisplayskip{20pt}
+    \setlength\abovedisplayshortskip{3pt}
+    \setlength\belowdisplayshortskip{20pt}
+}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+
+\begin{center}
+  \Huge\textbf{Using Self-Organizing Maps to solve Travelling Salesman
+    Problem}\\
+  \vspace{1cm}
+  \large\textsc{Maximilian Leonard Kleinans \& Diego Vicente Martín}
+\end{center}
+
+\section{System Overview}
+
+The goal of this system is to use Self-Organizing Maps to solve the Travelling
+Salesman Problem. To achieve it, we will create a population of neurons that
+will be iteratively make closer to each of the cities. By defining a 1D
+neighbourhood in this 2D space, we will make sure that the population behaves as
+an elastic ring that stretches until it occupies all the cities, while it tries
+to keep the perimeter as short as possible. Once we achieve it, we only have to
+traverse the cities following the ring.\\
+
+The main part of the system is located in \texttt{som.py}, where the main
+execution loop is located. In each iteration, we pick a random city among all
+the population. With that city, we search for the closest neuron to it. That
+neuron, and its neighbourhood, will be updated following the formula:
+
+$$
+w_v(s+1) \; \leftarrow \;
+w_v(s) + \alpha (s) \cdot \theta (u, v, s) \cdot (D(t) - w_v)
+$$
+
+Where $s$ is a iteration in which the neuron $w_u$ has been chosen as the
+winner of the city $D(t)$, and the formula is used to update all the neurons
+$w_v$ located in its neighbourhood. The parameters in the formula are $\alpha(s)$,
+that represents the learning rate; $\theta(u, v, s)$ that represents the
+neighbourhood function value of $v$ to respect of $u$ at time $s$. We also have
+to remark that thse last parameters decay over time.\\
+
+To do that, we will use different types of decay functions, that are represented
+in the \texttt{decay.py} file: static decay (that maintains the same value for
+that parameter through all the iterations), linear decay (that linearly
+decreases the value of the parameter), or exponential decay (that exponentially
+decays the value of the parameter). For convenience, these parameters have been
+implemented as classes that can be passed to the computation methods.\\
+
+Apart from these computation files, we also have implemented a file
+\texttt{helper.py}, that is used for reading data sets from files and managing
+user input, and \texttt{plot.py}, that contains relevant methods from saving
+snapshots of the system at different moments of the execution, to see how the
+system gets to a certain solution.
+
+\end{document}
