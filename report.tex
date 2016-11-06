@@ -100,8 +100,8 @@ system gets to a certain solution.
 
 \section{Tuning the System}
 
-Once the system was implemented, we still had to work with it to get the best
-results out of it. Different combinations of parameters lay different results,
+Once the system was implemented, we still had to work with it to get good
+results. Different combinations of parameters lay different results,
 and we had to be comprehensive when testing for parameters.\\
 
 As a general conclusion, static decay is generally not a good decay approach to
@@ -114,21 +114,21 @@ focus on fixing the small details of the chosen one. More or less the same
 approach can be seen with exponential, but thanks to its nature it is able to
 stabilize much faster than linear. That's why, overall, the best decay strategy
 to use is exponential although linear can also lay great results (specially when
-applied to the learning rate alone).\\
+applied to the learning rate alone). Another conclusion we can make is, that with increasing number of cities linear performs worse and in case of the \texttt{uruguay} data set with 734 cities we could not get decent results using linear decay.\\
 
-In neighborhood functions, the one that lays the best result is the Gaussian
+Regarding neighborhood functions, the one that lays the best result is the Gaussian
 function. Although bubble does not lay bad results, we can see how Gaussian
 moves the network in a much softer fashion, due to its gradient to the edges
-versus the 1 or 0 values or bubble.\\
+versus the 1 or 0 values or bubble. Nevertheless bubble is much faster to compute and for increasing number of cities it might be more suitable in terms of runtime. \\
 
 Other parameters to be tuned are the initial value of learning rates and
 neighbourhood size, although that depends on great part on the data set and the
 decay function we are going to use: static will need lower values and we will be
 able to use higher values at the beginning if we use a decay strategy. We also
-have to think on the size of the population of neurons. As a general rule, we
+have to think about the size of the population of neurons. As a general rule, we
 will need more neurons than cities so we can model the path through all the
 cities in the map. As we have been able to test, the optimal size of the
 population to get a network with a proper size is about 4-8 times greater than
-the city population of the dataset.\\
+the city population of the data set.\\
 
 \end{document}
