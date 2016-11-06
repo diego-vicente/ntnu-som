@@ -8,7 +8,13 @@ DEFAULTS = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
                         ExponentialDecay(734*8/10, 0.999)),
             'western_sahara': ('western_sahara', 8, 3500, 50, 50, gaussian,
                         ExponentialDecay(0.7, 0.9999),
-                        ExponentialDecay(29*8/10, 0.999))}
+                        ExponentialDecay(29*8/10, 0.999)),
+            'qatar': ('qatar', 8, 5000, 500, 100, gaussian,
+                        ExponentialDecay(0.9, 0.9999),
+                        ExponentialDecay(194*8/20, 0.999)),
+            'djibouti': ('djibouti', 8, 5000, 500, 100, gaussian,
+                        ExponentialDecay(0.9, 0.9999),
+                        ExponentialDecay(89*8/30, 0.999))}
 
 
 plt.figure()
