@@ -4,6 +4,7 @@ from decay import StaticDecay, LinearDecay, ExponentialDecay
 
 plt.figure()
 
+
 def plot_map(cities, neurons, iteration):
     """
     Generates the required map of cities and neurons at a given moment and
@@ -17,15 +18,20 @@ def plot_map(cities, neurons, iteration):
     :param iteration: the iterations when the snapshot is taken
     :return: returns nothing
     """
-    plt.scatter(*zip(*cities), color='red', s = 3)
-    plt.scatter(*zip(*neurons), color='green', s = 2)
+    plt.scatter(*zip(*cities), color='red', s=3)
+    plt.scatter(*zip(*neurons), color='green', s=2)
 
     plt.plot(*zip(*(neurons+[neurons[0]])), color='darkgreen')
+
+    # Invert x axis to match representation at
+    # http://www.math.uwaterloo.ca/tsp/world/countries.html
+    plt.gca().invert_xaxis()
 
     plt.title('Iteration #{:06d}'.format(iteration))
     plt.axis('off')
     plt.savefig('results/{}.png'.format(iteration))
     plt.clf()
+
 
 def read_data(filename):
     """
