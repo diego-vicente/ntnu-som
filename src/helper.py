@@ -64,7 +64,12 @@ def get_input():
     :return learning_rate: learning rate to be used
     :return radius: radius of neurons to be used
     """
-    data_set = input('Data set (i.e western_sahara): ') or 'western_sahara'
+    data_sets = {'w': 'western_sahara', 'q': 'qatar', 'u': 'urugay',
+                 'd': 'djibouti'}
+
+    set_id = input('Data set [w/q/u/d]: ') or 'w'
+    data_set = data_sets[set_id]
+
     if not os.path.isfile('assets/{}.txt'.format(data_set)):
         exit("Did not find this data set file!", 1)
 
