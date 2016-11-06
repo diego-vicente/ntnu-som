@@ -2,7 +2,8 @@
 
 from helper import read_data, plot_map, get_input
 from neighborhood import gaussian, bubble
-from distances import euclidean_distance
+from distances import euclidean_distance_2d, euclidean_distance_1d_circular
+
 import random
 from operator import itemgetter
 from functools import partial
@@ -31,9 +32,9 @@ def som(neurons, cities, iterations, neighborhood, learning_rate, radius, scalin
         # Pick a random city
         city = cities[i % len(cities)]
         # Choose the winner neuron
-        winner_index, winner = compute_winner(city, neurons, euclidean_distance)
+        winner_index, winner = compute_winner(city, neurons, euclidean_distance_2d)
 
-        distance = partial(list_euclidian_distance, len(neurons))
+        distance = partial(euclidean_distance_1d_circular, len(neurons))
 
         if i < iterations and i % 50 == 0:
             plot_map(cities, neurons, i)
@@ -69,22 +70,11 @@ def normalize(cities):
     return m, [(x/m, y/m) for (x, y) in cities]
 
 
-def list_euclidian_distance(n, i, j):
-    if(j<i):
-        t = j
-        j = i
-        i = t
-    if j-i <= n/2:
-        return j-i
-    return i - (j-n)
-
-
 def calculate_tsp(cities, neurons):
-
     city_neurons = {}
     for city_idx, city in enumerate(cities):
         # find nearest neuron
-        idx, _ = compute_winner(city, neurons, euclidean_distance)
+        idx, _ = compute_winner(city, neurons, euclidean_distance_2d)
         if idx not in city_neurons:
             city_neurons[idx] = [city]
         else:
@@ -97,10 +87,11 @@ def calculate_tsp(cities, neurons):
             tsp_order += city_neurons[neuron_idx]
 
     # calculate tsp distance for tsp_order
-    tsp_distance = euclidean_distance(tsp_order[0], tsp_order[-1])
+    tsp_distance = euclidean_distance_2d(tsp_order[0], tsp_order[-1])
     for idx in range(len(tsp_order)-1):
-        tsp_distance += euclidean_distance(tsp_order[idx], tsp_order[idx+1])
+        tsp_distance += euclidean_distance_2d(tsp_order[idx], tsp_order[idx + 1])
 
     return tsp_distance
+
 
 if __name__ == '__main__': main()
