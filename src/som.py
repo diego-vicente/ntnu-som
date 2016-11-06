@@ -18,7 +18,7 @@ def main():
     neurons = init_neurons(neuron_count)
 
     # TODO get user input for k = 50 and neighborhood function, distance
-    som(neurons, cities, iterations, 50, gaussian, learning_rate, radius, scaling)
+    som(neurons, cities, iterations, 1000, 200, bubble, learning_rate, radius, scaling)
 
 
 def init_neurons(count):
@@ -28,11 +28,12 @@ def init_neurons(count):
     return [[random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)] for i in range(count)]
 
 
-def som(neurons, cities, iterations, k, neighborhood, learning_rate, radius, scaling):
+def som(neurons, cities, iterations, k, plot_k, neighborhood, learning_rate, radius, scaling):
     for i in range(0, iterations+1):
         if i % k == 0:
+            print('#', i, '\t\tTSP-distance: ', calculate_tsp(cities, neurons)*scaling)
+        if i % plot_k == 0:
             plot_map(cities, neurons, i)
-            print('#', i, '\tTSP-distance: ', calculate_tsp(cities, neurons)*scaling)
         if i == iterations:
             break
         som_iteration(neurons, cities, neighborhood, learning_rate, radius)
