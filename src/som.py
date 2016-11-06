@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from helper import read_data, plot_map, get_input
-from neighborhood import gaussian, bubble
 from distances import euclidean_distance_2d, euclidean_distance_1d_circular
 
 import random
@@ -10,15 +9,16 @@ from functools import partial
 
 
 def main():
-    data_set, n_neurons, iterations, learning_rate, radius = get_input()
+    data_set, n_neurons, iterations, k, plot_k, neighborhood, learning_rate\
+        , radius = get_input()
     cities = read_data(data_set)
     scaling, cities = normalize(cities)
 
     neuron_count = len(cities) * n_neurons
     neurons = init_neurons(neuron_count)
 
-    # TODO get user input for k = 50 and neighborhood function, distance
-    som(neurons, cities, iterations, 1000, 200, bubble, learning_rate, radius,
+    # TODO maybe distance param?
+    som(neurons, cities, iterations, k, plot_k, neighborhood, learning_rate, radius,
         scaling)
 
 
