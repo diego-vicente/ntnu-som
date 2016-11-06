@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+\usepackage{makeidx}               % index
+\usepackage[utf8]{inputenc}        % now we have tildes!
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[english]{babel}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{indentfirst}
+
+\graphicspath{{img/}}
+
+% Set more space after the equation display to make text more readable
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+    \setlength\abovedisplayskip{100pt}
+    \setlength\belowdisplayskip{20pt}
+    \setlength\abovedisplayshortskip{3pt}
+    \setlength\belowdisplayshortskip{20pt}
+}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+
+\begin{center}
+  \Huge\textbf{Using Self-Organizing Maps to solve Travelling Salesman
+    Problem}\\
+  \vspace{1cm}
+  \large\textsc{Maximilian Leonard Kleinans \& Diego Vicente Martín}
+\end{center}
+
+\section{System Overview}
+
+The goal of this system is to use Self-Organizing Maps to solve the Travelling
+Salesman Problem. To achieve it, we will create a population of neurons that
+will be iteratively make closer to each of the cities. By defining a 1D
+neighborhood in this 2D space, we will make sure that the population behaves as
+an elastic ring that stretches until it occupies all the cities, while it tries
+to keep the perimeter as short as possible. Once we achieve it, we only have to
+traverse the cities following the ring.\\
+
+The main part of the system is located in \texttt{som.py}, where the main
+execution loop is located. In each iteration, we pick a random city among all
+the population. With that city, we search for the closest neuron to it. That
+neuron, and its neighborhood, will be updated following the formula:
+
+$$
+w_v(s+1) \; \leftarrow \;
+w_v(s) + \alpha (s) \cdot \eta (u, v, s) \cdot (D(t) - w_v)
+$$
+
+Where $s$ is a iteration in which the neuron $w_u$ has been chosen as the
+winner of the city $D(t)$, and the formula is used to update all the neurons
+$w_v$ located in its neighborhood. The parameters in the formula are $\alpha(s)$,
+that represents the learning rate; $\eta(u, v, s)$ that represents the
+neighborhood function value of $v$ to respect of $u$ at time $s$. We also have
+to remark that thse last parameters decay over time.\\
+
+To do that, we will use different types of decay functions, that are represented
+in the \texttt{decay.py} file: static decay (that maintains the same value for
+that parameter through all the iterations), linear decay (that linearly
+decreases the value of the parameter), or exponential decay (that exponentially
+decays the value of the parameter). For convenience, these parameters have been
+implemented as classes that can be passed to the computation methods.\\
+
+Also relevant to the system is to notice that we have implemented two different
+neighborhood functions: bubble, which basically creates a normal neighborhood
+of defined size around the winner; and gaussian, that creates a Gaussian
+distribution around the winner. Both implementations can be found in the file
+\texttt{neighborhood.py}.\\
+
+Apart from these computation files, we also have implemented a file
+\texttt{helper.py}, that is used for reading data sets from files and managing
+user input, and \texttt{plot.py}, that contains relevant methods from saving
+snapshots of the system at different moments of the execution, to see how the
+system gets to a certain solution.
+
+\section{Tuning the System}
+
+Once the system was implemented, we still had to work with it to get the best
+results out of it. Different combinations of parameters lay different results,
+and we had to be comprehensive when testing for parameters.\\
+
+As a general conclusion, static decay is generally not a good decay approach to
+use. By keeping the parameters with a static value during all the execution is
+much harder to make the system converge into a solution. It is still possible to
+get decent results, but overall it is not worth to use static decay. If, in the
+other hand, we use linear, we can see the system converging much better to a
+certain solution: in the beginning the system tries different strategies to then
+focus on fixing the small details of the chosen one. More or less the same
+approach can be seen with exponential, but thanks to its nature it is able to
+stabilize much faster than linear. That's why, overall, the best decay strategy
+to use is exponential although linear can also lay great results (specially when
+applied to the learning rate alone).\\
+
+In neighborhood functions, the one that lays the best result is the Gaussian
+function. Although bubble does not lay bad results, we can see how Gaussian
+moves the network in a much softer fashion, due to its gradient to the edges
+versus the 1 or 0 values or bubble.\\
+
+Other parameters to be tuned are the initial value of learning rates and
+neighbourhood size, although that depends on great part on the data set and the
+decay function we are going to use: static will need lower values and we will be
+able to use higher values at the beginning if we use a decay strategy. We also
+have to think on the size of the population of neurons. As a general rule, we
+will need more neurons than cities so we can model the path through all the
+cities in the map. As we have been able to test, the optimal size of the
+population to get a network with a proper size is about 4-8 times greater than
+the city population of the dataset.\\
+
+\end{document}
