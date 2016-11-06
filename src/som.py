@@ -27,33 +27,33 @@ def init_neurons(count):
     return [[random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)] for i in range(count)]
 
 
-
-
-
 def som(neurons, cities, iterations, neighborhood, learning_rate, radius, scaling):
-    for i in range(iterations):
-        # Pick a random city
-        city = cities[random.randint(0, len(cities)-1)]
-        # Choose the winner neuron
-        winner_index, winner = compute_winner(city, neurons, euclidean_distance_2d)
-
-        distance = partial(euclidean_distance_1d_circular, len(neurons))
-
-        if i < iterations and i % 50 == 0:
+    for i in range(0, iterations+1):
+        if i % 50 == 0:
             plot_map(cities, neurons, i)
             print('#', i, '\tTSP-distance: ', calculate_tsp(cities, neurons)*scaling)
+        if i == iterations:
+            break
+        som_iteration(neurons, cities, neighborhood, learning_rate, radius)
 
-        # Update the weights of the neuron and its neighbourhood
-        for neuron_index, neuron in enumerate(neurons):
-            d = distance(neuron_index, winner_index)
-            nf = neighborhood(d, radius.value)
-            neuron[0] += learning_rate.value * nf * (city[0] - neuron[0])
-            neuron[1] += learning_rate.value * nf * (city[1] - neuron[1])
 
-        learning_rate.decay()
-        radius.decay()
+def som_iteration(neurons, cities, neighborhood, learning_rate, radius):
+    # Pick a random city
+    city = cities[random.randint(0, len(cities)-1)]
+    # Choose the winner neuron
+    winner_index, winner = compute_winner(city, neurons, euclidean_distance_2d)
 
-    plot_map(cities, neurons, iterations)
+    distance = partial(euclidean_distance_1d_circular, len(neurons))
+
+    # Update the weights of the neuron and its neighbourhood
+    for neuron_index, neuron in enumerate(neurons):
+        d = distance(neuron_index, winner_index)
+        nf = neighborhood(d, radius.value)
+        neuron[0] += learning_rate.value * nf * (city[0] - neuron[0])
+        neuron[1] += learning_rate.value * nf * (city[1] - neuron[1])
+
+    learning_rate.decay()
+    radius.decay()
 
 
 def compute_winner(city, neurons, distance):
