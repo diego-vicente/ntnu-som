@@ -26,6 +26,7 @@ def plot_map(cities, neurons, iteration):
     # Invert x axis to match representation at
     # http://www.math.uwaterloo.ca/tsp/world/countries.html
     plt.gca().invert_xaxis()
+    plt.gca().set_aspect('equal', adjustable='datalim')
 
     plt.title('Iteration #{:06d}'.format(iteration))
     plt.axis('off')
