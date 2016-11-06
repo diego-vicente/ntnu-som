@@ -52,7 +52,7 @@
   \Huge\textbf{Using Self-Organizing Maps to solve Travelling Salesman
     Problem}\\
   \vspace{1cm}
-  \large\textsc{Maximilian Leonard Kleinans \& Diego Vicente Martín}
+  \large\textsc{Maximilian Leonard Kleinhans \& Diego Vicente Martín}
 \end{center}
 
 \section{System Overview}
@@ -82,7 +82,11 @@ Where $s$ is the iteration in which the neuron $w_u$ has been chosen as the
 winner of the city $D(t)$, and the formula is used to update all the neurons
 $w_v$ located in its neighborhood. The parameters in the formula are the
 learning rate $\alpha(s)$,  the neighborhood function  $\eta(u, v, s)$. We also
-have to remark that those last parameters decay over time.\\
+have to remark that those last parameters decay over time. These weights
+associated to each vector are initialized in our system to random values that
+will be easily corrected through the first iterations, there is no point in
+wasting time or computations in finding different ways to initialize the
+network.\\
 
 To achieve decaying, we will use different types of decay functions, that are
 represented in the \texttt{decay.py} file: static decay (that maintains the same
@@ -160,24 +164,24 @@ for each of the decay strategies:
       \hline
       \hline
       \multirow{3}{*}{\textbf{Western Sahara}}
-        & Static & 6 & 5000 & Gaussian & 0.3 & 5 & - \\
-        & Linear &  \\
-        & Exponential & 8 & 500 & Gaussian & 0.7 & 23 & - \\
+        & Static & 6 & 5000 & Gaussian & 0.3 & 5 & 34814.67 \\
+        & Linear & 8 & 500 & Gaussian & 0.7 & 23 & 27620.78 \\
+        & Exponential & 8 & 500 & Gaussian & 0.7 & 23 & 27601.17 \\
       \hline
       \multirow{3}{*}{\textbf{Djibouti}}
-        & Static & 4 & 5000 & Gaussian & 0.2 & 10 & - \\
-        & Linear &  \\
-        & Exponential & 8 & 1000 & Gaussian & 0.7 & 71 & - \\
+        & Static & 4 & 5000 & Gaussian & 0.2 & 10 & 7692.15\\
+        & Linear & 8 & 5000 & Gaussian & 0.7 & 71 & 6659.91 \\
+        & Exponential & 8 & 1000 & Gaussian & 0.7 & 71 & 6659.91 \\
       \hline
       \multirow{3}{*}{\textbf{Qatar}}
-        & Static & 6 & 5000 & Gaussian & 0.4 & 50 & - \\
-        & Linear &  \\
-        & Exponential & 8 & 5000 & Gaussian & 0.9 & 155 & - \\
+        & Static & 6 & 5000 & Gaussian & 0.4 & 50 & 14678.38 \\
+        & Linear & 8 & 10000 & Gaussian & 0.7 & 155 &10284.41 \\
+        & Exponential & 8 & 5000 & Gaussian & 0.9 & 155 & 10195.32 \\
       \hline
       \multirow{3}{*}{\textbf{Uruguay}}
-        & Static & 8 & 10000 & Gaussian & 0.4 & 500 & - \\
-        & Linear &  \\
-        & Exponential & 8 & 10000 & Bubble & 0.7 & 587 & - \\
+        & Static & 8 & 10000 & Gaussian & 0.4 & 500 & 357201.05 \\
+        & Linear & 8 & 10000 & Gaussian & 0.9 & 587 & 141536.50 \\
+        & Exponential & 8 & 10000 & Bubble & 0.7 & 587 & 86819.03 \\
       \hline
     \end{tabular}
   \end{center}
