@@ -56,11 +56,18 @@ def read_data(filename):
 
 
 def get_input():
-
-    radius = ExponentialDecay(29*8/10, 0.999)
+    """
+    Gets the input from the user line or launches the default values
+    :return data_set: list of cities as (x,y) coordinates
+    :return n_neurons: number of neurons per city in the data_set
+    :return iterations: number of iterations to be executed
+    :return learning_rate: learning rate to be used
+    :return radius: radius of neurons to be used
+    """
+    # TODO: fix the code
+    radius = ExponentialDecay(734*8/10, 0.999)
     learning_rate = ExponentialDecay(0.7, 0.9999)
-    return 'western_sahara', 8, 3500, learning_rate, radius
-
+    return 'uruguay', 8, 10000, learning_rate, radius
     data_set = input('Data set (western_sahara):') or 'western_sahara'
     if not os.path.isfile('assets/{}.txt'.format(data_set)):
         exit("Did not find this data set file!", 1)
@@ -75,6 +82,13 @@ def get_input():
 
 
 def get_input_decay(name):
+    """
+    Generates the appropriate decay function for a given variable. The decays
+    that can be generated are static (no decay over time), linear and
+    exponential.
+    :param name: name of the variable that will be generated
+    :return: decay function for the variable with appropriate parameters
+    """
     decay = input('What kind of decay for {}? [s/l/e]'.format(name)) or 'e'
     if decay == 's':
         value = float(input('Static value: '))
@@ -88,4 +102,3 @@ def get_input_decay(name):
         rate = float(input('Rate:'))
         return ExponentialDecay(value, rate)
     exit('Not a valid option!', 1)
-
