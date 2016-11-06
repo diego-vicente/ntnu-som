@@ -57,16 +57,14 @@
 \section{System Overview}
 
 The goal of this system is to use Self-Organizing Maps to solve the Travelling
-Salesman Problem. To achieve it, we will create a population of neurons that
-will be iteratively make closer to each of the cities. By defining a 1D
+Salesman Problem. To achieve that, we will create a population of neurons that
+is spatially distributed on a ring structure and as the algorithm progresses, neurons are pulled towards the cities. By defining a 1D
 neighborhood in this 2D space, we will make sure that the population behaves as
 an elastic ring that stretches until it occupies all the cities, while it tries
 to keep the perimeter as short as possible. Once we achieve it, we only have to
-traverse the cities following the ring.\\
+traverse the cities following the ring to obtain a TSP solution.\\
 
-The main part of the system is located in \texttt{som.py}, where the main
-execution loop is located. In each iteration, we pick a random city among all
-the population. With that city, we search for the closest neuron to it. That
+The main component of the system is located in \texttt{som.py}: First we scale down the data, so that for each city coordinate $ c= (x, y) ~ 0 \le x,y \le 1$ holds true. Further is here the main execution loop located. In each iteration, we pick a random city. Then we compute the best matching unit, that is closest neuron to this city. That
 neuron, and its neighborhood, will be updated following the formula:
 
 $$
@@ -74,31 +72,31 @@ w_v(s+1) \; \leftarrow \;
 w_v(s) + \alpha (s) \cdot \eta (u, v, s) \cdot (D(t) - w_v)
 $$
 
-Where $s$ is a iteration in which the neuron $w_u$ has been chosen as the
+Where $s$ is the iteration in which the neuron $w_u$ has been chosen as the
 winner of the city $D(t)$, and the formula is used to update all the neurons
-$w_v$ located in its neighborhood. The parameters in the formula are $\alpha(s)$,
-that represents the learning rate; $\eta(u, v, s)$ that represents the
-neighborhood function value of $v$ to respect of $u$ at time $s$. We also have
-to remark that thse last parameters decay over time.\\
+$w_v$ located in its neighborhood. The parameters in the formula are the learning rate $\alpha(s)$,  the neighborhood function  $\eta(u, v, s)$. We also have
+to remark that those last parameters decay over time.
 
-To do that, we will use different types of decay functions, that are represented
+To achieve decaying, we will use different types of decay functions, that are represented
 in the \texttt{decay.py} file: static decay (that maintains the same value for
 that parameter through all the iterations), linear decay (that linearly
 decreases the value of the parameter), or exponential decay (that exponentially
 decays the value of the parameter). For convenience, these parameters have been
 implemented as classes that can be passed to the computation methods.\\
 
+The calculation of a TSP solution from a list of neuron is done as described in chapter 4 in the compendium. That is, for each city we select the closest neuron and then define the city order through the order of the selected neurons. 
+
+
 Also relevant to the system is to notice that we have implemented two different
-neighborhood functions: bubble, which basically creates a normal neighborhood
-of defined size around the winner; and gaussian, that creates a Gaussian
+neighborhood functions: \texttt{bubble}, constant in the while neighborhood, 0 elsewhere and \text{gaussian}, that creates a Gaussian
 distribution around the winner. Both implementations can be found in the file
 \texttt{neighborhood.py}.\\
 
-Apart from these computation files, we also have implemented a file
-\texttt{helper.py}, that is used for reading data sets from files and managing
-user input, and \texttt{plot.py}, that contains relevant methods from saving
+Apart from these computation files, we also have implemented helper methods for reading data sets from files and managing
+user input  in \texttt{helper.py}. Furthermore also methods for plotting and saving
 snapshots of the system at different moments of the execution, to see how the
 system gets to a certain solution.
+
 
 \section{Tuning the System}
 
