@@ -27,10 +27,13 @@ def init_neurons(count):
     return [[random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)] for i in range(count)]
 
 
+
+
+
 def som(neurons, cities, iterations, neighborhood, learning_rate, radius, scaling):
     for i in range(iterations):
         # Pick a random city
-        city = cities[i % len(cities)]
+        city = cities[random.randint(0, len(cities)-1)]
         # Choose the winner neuron
         winner_index, winner = compute_winner(city, neurons, euclidean_distance_2d)
 
