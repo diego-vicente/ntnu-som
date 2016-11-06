@@ -29,18 +29,18 @@ DEFAULTS_LIN = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
                         LinearDecay(0.9, 0.0001),
                         LinearDecay(89*8/10, 0.0085))}
 
-DEFAULT_STA = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
-                        StaticDecay(0.7),
-                        StaticDecay(734*8/10)),
-            'western_sahara': ('western_sahara', 8, 5000, 50, 50, gaussian,
-                        StaticDecay(0.8),
-                        StaticDecay(29*8/100)),
-            'qatar': ('qatar', 8, 5000, 500, 100, gaussian,
-                        StaticDecay(0.9),
-                        StaticDecay(194*8/20)),
-            'djibouti': ('djibouti', 8, 5000, 500, 100, gaussian,
-                        StaticDecay(0.9),
-                        StaticDecay(89*8/30))}
+DEFAULT_STA = {'uruguay': ('uruguay', 8, 10000, 1000, 200, gaussian,
+                        StaticDecay(0.4),
+                        StaticDecay(500)),
+            'western_sahara': ('western_sahara', 6, 5000, 1000, 200, gaussian,
+                        StaticDecay(0.3),
+                        StaticDecay(5)),
+            'qatar': ('qatar', 6, 5000, 1000, 200, gaussian,
+                        StaticDecay(0.4),
+                        StaticDecay(50)),
+            'djibouti': ('djibouti', 4, 5000, 1000, 200, gaussian,
+                        StaticDecay(0.2),
+                        StaticDecay(10))}
 
 plt.figure()
 
