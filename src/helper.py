@@ -54,11 +54,12 @@ def read_data(filename):
 
     return cities
 
+
 def get_input():
 
-    radius = ExponentialDecay(29*4/10, 0.999)
+    radius = ExponentialDecay(29*8/10, 0.999)
     learning_rate = ExponentialDecay(0.7, 0.9999)
-    return 'western_sahara', 4, 3500, learning_rate, radius
+    return 'western_sahara', 8, 3500, learning_rate, radius
 
     data_set = input('Data set (western_sahara):') or 'western_sahara'
     if not os.path.isfile('assets/{}.txt'.format(data_set)):
