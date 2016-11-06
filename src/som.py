@@ -38,7 +38,7 @@ def som(neurons, cities, iterations, neighborhood, learning_rate, radius, scalin
 
         if i < iterations and i % 50 == 0:
             plot_map(cities, neurons, i)
-            print("TSP distance: ", calculate_tsp(cities, neurons)*scaling)
+            print('#', i, '\tTSP-distance: ', calculate_tsp(cities, neurons)*scaling)
 
         # Update the weights of the neuron and its neighbourhood
         for neuron_index, neuron in enumerate(neurons):
