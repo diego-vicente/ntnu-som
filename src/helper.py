@@ -71,7 +71,7 @@ def get_input():
     data_set = data_sets[set_id]
 
     if not os.path.isfile('assets/{}.txt'.format(data_set)):
-        exit("Did not find this data set file!", 1)
+        exit("Did not find this data set file!")
 
     # Load defaults for each data set
     if data_set == 'uruguay':
@@ -116,4 +116,4 @@ def get_input_decay(name):
         value = float(input('Start value: '))
         rate = float(input('Rate:'))
         return ExponentialDecay(value, rate)
-    exit('Not a valid option!', 1)
+    exit('Not a valid option!')
