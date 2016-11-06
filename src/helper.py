@@ -16,18 +16,18 @@ DEFAULTS_EXP = {'uruguay': ('uruguay', 8, 10000, 1000, 500, bubble,
                         ExponentialDecay(0.7, 0.999),
                         ExponentialDecay(89*8/10, 0.995))}
 
-DEFAULTS_LIN = {'uruguay': ('uruguay', 8, 10000, 1000, 200, bubble,
-                        LinearDecay(0.7, 0.9999),
-                        LinearDecay(734*8/10, 0.999)),
+DEFAULTS_LIN = {'uruguay': ('uruguay', 8, 10000, 1000, 500, gaussian,
+                        LinearDecay(0.9, 0.000089),
+                        LinearDecay(734*8/10, 0.055)),
             'western_sahara': ('western_sahara', 8, 500, 50, 50, gaussian,
                         LinearDecay(0.7, 0.001),
-                        LinearDecay(29*8/10, 0.004)),
+                        LinearDecay(29*8/10, 0.04)),
             'qatar': ('qatar', 8, 10000, 500, 500, gaussian,
-                        LinearDecay(0.7, 0.00005),
-                        LinearDecay(194*8/10, 0.013)),
-            'djibouti': ('djibouti', 8, 8000, 500, 100, gaussian,
-                        LinearDecay(0.9, 0.0001),
-                        LinearDecay(89*8/10, 0.0085))}
+                        LinearDecay(0.7, 0.000065),
+                        LinearDecay(194*8/10, 0.015)),
+            'djibouti': ('djibouti', 8, 5000, 50, 50, gaussian,
+                        LinearDecay(0.7, 0.0001),
+                        LinearDecay(89*8/10, 0.014))}
 
 DEFAULT_STA = {'uruguay': ('uruguay', 8, 10000, 1000, 200, gaussian,
                         StaticDecay(0.4),
