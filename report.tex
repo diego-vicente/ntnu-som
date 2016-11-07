@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+
 \usepackage{graphicx}              % to include figures
 \usepackage{amsmath}               % great math stuff
 \usepackage{amsfonts}              % for blackboard bold, etc
@@ -13,6 +13,9 @@
 \usepackage{listings}
 \usepackage{indentfirst}
 \usepackage{multirow}
+\usepackage{subcaption}
+
+\usepackage[a4paper, left=3cm, right=3cm, top=3cm]{geometry}
 
 \graphicspath{{diagrams/}}
 
@@ -102,7 +105,7 @@ and then define the city order through the order of the selected neurons.\\
 Also relevant to the system is to notice that we have implemented two different
 neighborhood functions: \texttt{bubble}, constant in the while neighborhood, 0
 elsewhere and \text{gaussian}, that creates a Gaussian distribution around the
-winner. Both implementations can be found in the file
+winner. Both implementations can be find in the file
 \texttt{neighborhood.py}.\\
 
 Apart from these computation files, we also have implemented helper methods for
@@ -152,117 +155,142 @@ the city population of the data set.\\
 
 \newpage
 
-By doing this tuning, we got to the conclusion that this was the best parameters
-for each of the decay strategies:
+By doing this tuning, we came to the conclusion that these were the best parameters for each of the decay strategies:
 
 \begin{table}[ht]
   \begin{center}
-    \begin{tabular}{| c | c | c | c | c | c | c | c |}
+    \begin{tabular}{| p{1.8cm}| c | c | c | c | c | c | c |}
       \hline
-      Map & Decay & Neurons/City & $N$
-      & $\eta$ & $\alpha$ & Radius & Final Distance\\
+      Map & Decay & Neurons & $N$
+      & $\alpha_0$ (decay) & $r_0$ (decay)& TSP Dist.\\
       \hline
       \hline
-      \multirow{3}{*}{\textbf{Western Sahara}}
-        & Static & 6 & 5000 & Gaussian & 0.3 & 5 & 34814.67 \\
-        & Linear & 8 & 500 & Gaussian & 0.7 & 23 & 27620.78 \\
-        & Exponential & 8 & 500 & Gaussian & 0.7 & 23 & 27601.17 \\
+      \multirow{3}{*}{\textbf{\parbox{1.7cm}{Western Sahara}}}
+        & Static & 174 & 5000  & 0.3 & 5 & 34814.67 \\
+        & Linear & 232 & 500  & 0.7 (0.001) & 23 (0.04) & 27620.78 \\
+        & Exponential & 232 & 500  & 0.7 (0.999) & 23 (0.995)& 27601.17 \\
       \hline
       \multirow{3}{*}{\textbf{Djibouti}}
-        & Static & 4 & 5000 & Gaussian & 0.2 & 10 & 7692.15\\
-        & Linear & 8 & 5000 & Gaussian & 0.7 & 71 & 6659.91 \\
-        & Exponential & 8 & 1000 & Gaussian & 0.7 & 71 & 6659.91 \\
+        & Static & 356 & 5000  & 0.2 & 10 & 7692.15\\
+        & Linear & 712 & 5000  & 0.7 (0.0001)& 71 (0.014)& 6659.91 \\
+        & Exponential & 712 & 1000  & 0.7 (0.999)& 71 (0.995)& 6659.91 \\
       \hline
       \multirow{3}{*}{\textbf{Qatar}}
-        & Static & 6 & 5000 & Gaussian & 0.4 & 50 & 14678.38 \\
-        & Linear & 8 & 10000 & Gaussian & 0.7 & 155 &10284.41 \\
-        & Exponential & 8 & 5000 & Gaussian & 0.9 & 155 & 10195.32 \\
+        & Static & 1164 & 5000  & 0.4 & 50 & 14678.38 \\
+        & Linear & 1552 & 10000  & 0.7 (0.000065) & 155 (0.015) &10284.41 \\
+        & Exponential & 1552 & 5000  & 0.9 (0.9999)& 155 (0.997)& 10195.32 \\
       \hline
       \multirow{3}{*}{\textbf{Uruguay}}
-        & Static & 8 & 10000 & Gaussian & 0.4 & 500 & 357201.05 \\
-        & Linear & 8 & 10000 & Gaussian & 0.9 & 587 & 141536.50 \\
-        & Exponential & 8 & 10000 & Bubble & 0.7 & 587 & 86819.03 \\
+        & Static & 5872 & 10000  & 0.4 & 500 & 357201.05 \\
+        & Linear & 5872 & 10000  & 0.9 (0.000089)& 587 (0.055)& 141536.50 \\
+        & Exponential & 5872 & 10000  & 0.7 (0.9999)& 587 (0.999) & 86819.03 \\
       \hline
     \end{tabular}
   \end{center}
+  \caption{Chosen parameters and results for TSP-SOM - $N$ is the number of iterations, $a_0$ the initial learning rate, $r_0$ the initial radius}
+  \label{tab:params}
 \end{table}
 
-And these are the results of the paths found by the different executions:
+In figures \ref{fig:sahara}, \ref{fig:djibouti}, \ref{fig:qatar} and \ref{fig:uruguay} are the TSP paths with different decay functions shown. The algorithm was executed with parameters shown in table \ref{tab:params}. Red dots illustrate cities and green dots neuron positions. We can see, that we consistently could obtain the best results with exponential decay, followed by linear. Apparently when not using exponential decay the algorithm is not able to refine the path in the end, resulting in inferior solutions.
 
-\begin{figure}[!ht]
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
   \centering
-  \includegraphics[scale=0.6]{d_s.png}
-  \caption{Djibouti in Static Decay}
-\end{figure}
-
-\begin{figure}[!ht]
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,
+  width=\linewidth]{w_s.png}
+  \caption{Static decay}
+  \label{fig:ws}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
   \centering
-  \includegraphics[scale=0.6]{d_l.png}
-  \caption{Djibouti in Linear Decay}
-\end{figure}
-
-\begin{figure}[!ht]
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{w_l.png}
+  \caption{Linear decay}
+  \label{fig:wl}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
   \centering
-  \includegraphics[scale=0.6]{d_e.png}
-  \caption{Djibouti in Exponential Decay}
-\end{figure}
-
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[scale=0.6]{w_s.png}
-  \caption{Western Sahara in Static Decay}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[scale=0.6]{w_l.png}
-  \caption{Western Sahara in Linear Decay}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[scale=0.6]{w_e.png}
-  \caption{Western Sahara in Exponential Decay}
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{w_e.png}
+  \caption{Exponential decay}
+  \label{fig:we}
+\end{subfigure}
+\caption{Results on \texttt{western\_sahara}}
+\label{fig:sahara}
 \end{figure}
 
 
-\begin{figure}[!ht]
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
   \centering
-  \includegraphics[scale=0.6]{q_s.png}
-  \caption{Qatar in Static Decay}
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,
+  width=\linewidth]{d_s.png}
+  \caption{Static decay}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{d_l.png}
+  \caption{Linear decay}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{d_e.png}
+  \caption{Exponential decay}
+\end{subfigure}
+\caption{Results on \texttt{djibouti}}
+\label{fig:djibouti}
+
 \end{figure}
 
-\begin{figure}[!ht]
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
   \centering
-  \includegraphics[scale=0.6]{q_l.png}
-  \caption{Qatar in Linear Decay}
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,
+  width=\linewidth]{q_s.png}
+  \caption{Static decay}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{q_l.png}
+  \caption{Linear decay}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{q_e.png}
+  \caption{Exponential decay}
+\end{subfigure}
+\caption{Results on \texttt{qatar}}
+\label{fig:qatar}
+
 \end{figure}
 
-\begin{figure}[!ht]
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
   \centering
-  \includegraphics[scale=0.6]{q_e.png}
-  \caption{Qatar in Exponential Decay}
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,
+  width=\linewidth]{u_s.png}
+  \caption{Static decay}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{u_l.png}
+  \caption{Linear decay}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{u_e.png}
+  \caption{Exponential decay}
+\end{subfigure}
+\caption{Results on \texttt{uruguay}}
+\label{fig:uruguay}
+
 \end{figure}
 
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[scale=0.6]{u_s.png}
-  \caption{Uruguay in Static Decay}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[scale=0.6]{u_l.png}
-  \caption{Uruguay in Linear Decay}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[scale=0.6]{u_e.png}
-  \caption{Uruguay in Exponential Decay}
-\end{figure}
 
 
 \end{document}
