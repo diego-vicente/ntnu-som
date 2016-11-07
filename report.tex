@@ -191,7 +191,8 @@ By doing this tuning, we came to the conclusion that these were the best paramet
   \label{tab:params}
 \end{table}
 
-In figures \ref{fig:sahara}, \ref{fig:djibouti}, \ref{fig:qatar} and \ref{fig:uruguay} are the TSP paths with different decay functions shown. The algorithm was executed with parameters shown in table \ref{tab:params}. Red dots illustrate cities and green dots neuron positions. We can see, that we consistently could obtain the best results with exponential decay, followed by linear. Apparently when not using exponential decay the algorithm is not able to refine the path in the end, resulting in inferior solutions.
+In figures \ref{fig:sahara}, \ref{fig:djibouti}, \ref{fig:qatar} and \ref{fig:uruguay} are the TSP paths with different decay functions shown. The algorithm was executed with parameters shown in table \ref{tab:params}. Red dots illustrate cities and green dots neuron positions. We can see, that we consistently could obtain the best results with exponential decay, followed by linear. Apparently when not using exponential decay the algorithm is not able to refine the path in the end, resulting in inferior solutions. \\
+Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} and \ref{fig:buruguay} the best runs illustrates, at the beginning in the middle and the final result of each run.
 
 \begin{figure}
 \centering
@@ -288,6 +289,105 @@ In figures \ref{fig:sahara}, \ref{fig:djibouti}, \ref{fig:qatar} and \ref{fig:ur
 \end{subfigure}
 \caption{Results on \texttt{uruguay}}
 \label{fig:uruguay}
+
+\end{figure}
+
+%%%%
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,
+  width=\linewidth]{w_0.png}
+  \caption{Initial state}
+  
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{w_250.png}
+  \caption{After 250 iterations}
+  
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{w_500.png}
+  \caption{After 500 iterations}
+\end{subfigure}
+\caption{Best results on \texttt{western\_sahara} with exponential decay}
+\label{fig:bsahara}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 1cm 4cm 1cm}, clip=true,
+  width=\linewidth]{d_0.png}
+  \caption{Initial state}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{d_500.png}
+  \caption{After 500 iterations}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{d_1000.png}
+  \caption{After 1000 iterations}
+\end{subfigure}
+\caption{Best results on \texttt{djibouti} with exponential decay}
+\label{fig:bdjibouti}
+
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={3cm 1.5cm 3cm 1.5cm}, clip=true,
+  width=\linewidth]{q_0.png}
+  \caption{Initial state}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{q_2500.png}
+  \caption{After 2500 iterations}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={6cm 2cm 6cm 2cm}, clip=true,width=\linewidth]{q_5000.png}
+  \caption{After 5000 iterations}
+\end{subfigure}
+\caption{Best results on \texttt{qatar} with exponential decay}
+\label{fig:bqatar}
+
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,
+  width=\linewidth]{u_0.png}
+  \caption{Initial state}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{u_5000.png}
+  \caption{After 5000 iterations}
+\end{subfigure}
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{u_10000.png}
+  \caption{After 10000 iterations}
+\end{subfigure}
+\caption{Best results on \texttt{uruguay} with exponential decay}
+\label{fig:buruguay}
 
 \end{figure}
 
