@@ -19,36 +19,6 @@
 
 \graphicspath{{diagrams/}}
 
-% Set more space after the equation display to make text more readable
-\expandafter\def\expandafter\normalsize\expandafter{%
-    \normalsize
-    \setlength\abovedisplayskip{100pt}
-    \setlength\belowdisplayskip{20pt}
-    \setlength\abovedisplayshortskip{3pt}
-    \setlength\belowdisplayshortskip{20pt}
-}
-
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
-\lstset{frame=tb,
-  language=Python,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=left,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
-}
-
 \begin{document}
 
 \begin{center}
@@ -113,7 +83,6 @@ reading data sets from files and managing user input  in \texttt{helper.py}.
 Furthermore also methods for plotting and saving snapshots of the system at
 different moments of the execution, to see how the system gets to a certain
 solution.\\
-
 
 \section{Tuning the System}
 
@@ -219,8 +188,6 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \label{fig:sahara}
 \end{figure}
 
-
-
 \begin{figure}
 \centering
 \begin{subfigure}{.33\textwidth}
@@ -241,9 +208,7 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \end{subfigure}
 \caption{Results on \texttt{djibouti}}
 \label{fig:djibouti}
-
 \end{figure}
-
 
 \begin{figure}
 \centering
@@ -265,9 +230,7 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \end{subfigure}
 \caption{Results on \texttt{qatar}}
 \label{fig:qatar}
-
 \end{figure}
-
 
 \begin{figure}
 \centering
@@ -289,10 +252,7 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \end{subfigure}
 \caption{Results on \texttt{uruguay}}
 \label{fig:uruguay}
-
 \end{figure}
-
-%%%%
 
 \begin{figure}
 \centering
@@ -301,13 +261,11 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
   \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,
   width=\linewidth]{w_0.png}
   \caption{Initial state}
-  
 \end{subfigure}%
 \begin{subfigure}{.33\textwidth}
   \centering
   \includegraphics[trim={4cm 2cm 4cm 2cm}, clip=true,width=\linewidth]{w_250.png}
   \caption{After 250 iterations}
-  
 \end{subfigure}
 \begin{subfigure}{.33\textwidth}
   \centering
@@ -317,8 +275,6 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \caption{Best results on \texttt{western\_sahara} with exponential decay}
 \label{fig:bsahara}
 \end{figure}
-
-
 
 \begin{figure}
 \centering
@@ -340,9 +296,7 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \end{subfigure}
 \caption{Best results on \texttt{djibouti} with exponential decay}
 \label{fig:bdjibouti}
-
 \end{figure}
-
 
 \begin{figure}
 \centering
@@ -364,9 +318,7 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \end{subfigure}
 \caption{Best results on \texttt{qatar} with exponential decay}
 \label{fig:bqatar}
-
 \end{figure}
-
 
 \begin{figure}
 \centering
@@ -388,9 +340,6 @@ Finally are in figures \ref{fig:bsahara}, \ref{fig:bdjibouti}, \ref{fig:bqatar} 
 \end{subfigure}
 \caption{Best results on \texttt{uruguay} with exponential decay}
 \label{fig:buruguay}
-
 \end{figure}
-
-
 
 \end{document}
